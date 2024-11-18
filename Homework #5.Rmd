@@ -66,14 +66,6 @@ denver_homicides <- homicides %>%
 ```
 
 ```{r}
-ggplot() +
-  geom_sf(data = denver_tracts) +
-  geom_sf(data = denver_homicides_sf) + 
-  ggtitle("Denver Homecide Cases")+
-  facet_wrap(~solved)
-```
-
-```{r}
 denver_homicides <- denver_homicides %>%
   mutate(
     victim_race_grouped = fct_lump_n(victim_race, n = 3)  # Keep the top 3 races
@@ -85,3 +77,10 @@ denver_homicides_sf <- st_as_sf(denver_homicides, coords = c("lon", "lat")) %>%
   st_set_crs(4326)
 ```
 
+```{r}
+ggplot() +
+  geom_sf(data = denver_tracts) +
+  geom_sf(data = denver_homicides_sf, aes(color = victim_race_grouped)) + 
+  ggtitle("Denver Homecide Cases")+
+  facet_wrap(~solved)
+```
