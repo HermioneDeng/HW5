@@ -22,6 +22,7 @@ library(tigris)
 
 Pick one city in the data. Create a map showing the locations of the homicides in that city, using the sf framework discussed in class. Use tigris to download boundaries for some sub-city geography (e.g., tracts, block groups, county subdivisions) to show as a layer underneath the points showing homicides. Use different facets for solved versus unsolved homicides and different colors to show the three race groups with the highest number of homicides for that city (you may find the fct_lump function from forcats useful for this).
 
+
 ```{r}
 homicides <- read_csv(paste0("https://raw.githubusercontent.com/washingtonpost/",
                              "data-homicides/refs/heads/master/homicide-data.csv"))
@@ -51,3 +52,14 @@ ggplot() +
   geom_sf(data = denver_tracts) +
   ggtitle("Denver, CO")
 ```
+
+```{r}
+denver_homicides <- homicides %>% 
+  filter(city == "Denver") %>% 
+  mutate(solved = case_when(
+    (disposition == "Closed by arrest") ~ "solved",
+   (disposition == "Closed without arrest" | 
+    disposition == "Open/No arrest") ~ "unsolved"
+  ))
+```
+
