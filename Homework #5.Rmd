@@ -75,3 +75,10 @@ ggplot() +
   facet_wrap(~solved)
 ```
 
+```{r}
+homicide_summary <- denver_homicides %>%
+  group_by(victim_race) %>%
+  count() %>% 
+  ungroup()
+```
+
