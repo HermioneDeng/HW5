@@ -81,6 +81,8 @@ denver_homicides_sf <- st_as_sf(denver_homicides, coords = c("lon", "lat")) %>%
 ggplot() +
   geom_sf(data = denver_tracts) +
   geom_sf(data = denver_homicides_sf, aes(color = victim_race_grouped)) + 
-  ggtitle("Denver Homecide Cases")+
-  facet_wrap(~solved)
+  ggtitle("Denver Homicide Cases")+
+  facet_wrap(~solved, nrow = 2)+
+  labs(color = "Victim race")+
+  theme_light()
 ```
